@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -34,12 +33,6 @@ public final class EnderClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (TOGGLE_OVERLAY.consumeClick()) {
                 overlayEnabled = !overlayEnabled;
-                if (client.player != null) {
-                    client.player.displayClientMessage(
-                            Component.literal("ENDER HUD: " + (overlayEnabled ? "ON" : "OFF")),
-                            true
-                    );
-                }
             }
         });
 
@@ -62,8 +55,8 @@ public final class EnderClient implements ClientModInitializer {
 
         graphics.fill(6, 6, 132, 55, 0xB5100B1D);
         graphics.fill(6, 6, 132, 8, 0xFF9B5CFF);
-        graphics.drawString(CLIENT.font, Component.literal("ENDER CLIENT"), 12, 13, 0xFFE8D9FF);
-        graphics.drawString(CLIENT.font, Component.literal("XYZ: " + x + " / " + y + " / " + z), 12, 26, 0xFFFFFFFF);
-        graphics.drawString(CLIENT.font, Component.literal("ARMOR: " + player.getArmorValue()), 12, 39, 0xFFBFA6FF);
+        graphics.text(CLIENT.font, "ENDER CLIENT", 12, 13, 0xFFE8D9FF, true);
+        graphics.text(CLIENT.font, "XYZ: " + x + " / " + y + " / " + z, 12, 26, 0xFFFFFFFF, true);
+        graphics.text(CLIENT.font, "ARMOR: " + player.getArmorValue(), 12, 39, 0xFFBFA6FF, true);
     }
 }
